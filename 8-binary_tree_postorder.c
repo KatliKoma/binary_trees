@@ -10,10 +10,10 @@
  */
 void binary_tree_postorder(const binary_tree_t *tree, void (*func)(int))
 {
-    if (tree == NULL || func == NULL)
-        return;
+	if (tree == NULL || func == NULL)
+		return;
 
-    binary_tree_postorder(tree->left, func); // Traverse left subtree
-    binary_tree_postorder(tree->right, func); // Traverse right subtree
-    func(tree->n); // Apply func to the current node's value
+	binary_tree_postorder(tree->left, func);
+	binary_tree_postorder(tree->right, func);
+	func(tree->n);
 }
