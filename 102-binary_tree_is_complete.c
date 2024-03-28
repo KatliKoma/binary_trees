@@ -3,22 +3,21 @@
 /**
  * create_new_node - Creates a new node for a queue.
  * @node: Pointer to the binary tree node to be added to the queue.
- * Return: A pointer to the newly created
- * queue node or NULL if allocation fails.
+ * Return: A pointer to the newly created queue node or NULL if allocation fails.
  */
 link_t *create_new_node(binary_tree_t *node)
 {
-	link_t *newQueueNode;
+    link_t *newQueueNode;
 
-	newQueueNode = malloc(sizeof(link_t));
-	if (newQueueNode == NULL)
-	{
-		return (NULL);
-	}
-	newQueueNode->node = node;
-	newQueueNode->next = NULL;
+    newQueueNode = malloc(sizeof(link_t));
+    if (newQueueNode == NULL)
+    {
+        return (NULL);
+    }
+    newQueueNode->node = node;
+    newQueueNode->next = NULL;
 
-	return (newQueueNode);
+    return (newQueueNode);
 }
 
 /**
@@ -27,14 +26,14 @@ link_t *create_new_node(binary_tree_t *node)
  */
 void free_queue(link_t *head)
 {
-	link_t *currentNode;
+    link_t *currentNode;
 
-	while (head)
-	{
-		currentNode = head->next;
-		free(head);
-		head = currentNode;
-	}
+    while (head)
+    {
+        currentNode = head->next;
+        free(head);
+        head = currentNode;
+    }
 }
 
 /**
@@ -45,15 +44,14 @@ void free_queue(link_t *head)
  */
 void enqueue(binary_tree_t *node, link_t *head, link_t **tail)
 {
-	link_t *newQueueNode = create_new_node(node);
-
-	if (newQueueNode == NULL)
-	{
-		free_queue(head);
-		exit(1);
-	}
-	(*tail)->next = newQueueNode;
-	*tail = newQueueNode;
+    link_t *newQueueNode = create_new_node(node);
+    if (newQueueNode == NULL)
+    {
+        free_queue(head);
+        exit(1);
+    }
+    (*tail)->next = newQueueNode;
+    *tail = newQueueNode;
 }
 
 /**
@@ -62,10 +60,9 @@ void enqueue(binary_tree_t *node, link_t *head, link_t **tail)
  */
 void dequeue(link_t **head)
 {
-	link_t *tempNode = (*head)->next;
-
-	free(*head);
-	*head = tempNode;
+    link_t *tempNode = (*head)->next;
+    free(*head);
+    *head = tempNode;
 }
 
 /**
@@ -75,42 +72,39 @@ void dequeue(link_t **head)
  */
 int binary_tree_is_complete(const binary_tree_t *tree)
 {
-	link_t *head, *tail;
-	int gapFlag = 0;
+    link_t *head, *tail;
+    int gapFlag = 0;
 
-	if (!tree)
-		return (0);
+    if (!tree)
+    return (0);
 
-	head = tail = create_new_node((binary_tree_t *)tree);
-	if (!head)
-		exit(1);
+    head = tail = create_new_node((binary_tree_t *)tree);
+    if (!head) 
+        exit(1);
 
-	while (head)
-	{
-		binary_tree_t *currentNode = head->node;
-
-		if (currentNode->left)
-		{
-
-			if (gapFlag)
-				return (free_queue(head), 0);
-			enqueue(currentNode->left, head, &tail);
-		}
-		else
-		{
-			gapFlag = 1;
-		}
-		if (currentNode->right)
-		{
-			if (gapFlag)
-				return (free_queue(head), 0);
-			enqueue(currentNode->right, head, &tail);
-		}
-		else
-		{
-			gapFlag = 1;
-		}
-		dequeue(&head);
-	}
-	return (1);
+    while (head)
+    {
+        binary_tree_t *currentNode = head->node;
+        if (currentNode->left)
+        {
+            if (gapFlag)
+                return (free_queue(head), 0);
+            enqueue(currentNode->left, head, &tail);
+        } else 
+        {
+            gapFlag = 1;
+        }
+        if (currentNode->right)
+        {
+            if (gapFlag) 
+                return (free_queue(head), 0);
+            enqueue(currentNode->right, head, &tail);
+        }
+        else 
+        {
+            gapFlag = 1;
+        }
+        dequeue(&head);
+    }
+    return (1);
 }
