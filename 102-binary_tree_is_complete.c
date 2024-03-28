@@ -73,34 +73,42 @@ void dequeue(link_t **head)
 int binary_tree_is_complete(const binary_tree_t *tree)
 {
     link_t *head, *tail;
-    int gapFlag = 0;
+    int gapFlag = 0; // Flags if a gap has been found in the tree.
 
-    if (!tree)
-    return (0);
-
-    head = tail = create_new_node((binary_tree_t *)tree);
-    if (!head) 
-        exit(1);
-
-    while (head)
+    if (tree == NULL)
     {
-        binary_tree_t *currentNode = head->node;
-        if (currentNode->left)
+        return (0);
+    }
+    head = tail = create_new_node((binary_tree_t *)tree);
+    if (head == NULL)
+    {
+        exit(1);
+    }
+    while (head != NULL)
+    {
+        if (head->node->left != NULL)
         {
             if (gapFlag)
-                return (free_queue(head), 0);
-            enqueue(currentNode->left, head, &tail);
-        } else 
+            {
+                free_queue(head);
+                return (0);
+            }
+            enqueue(head->node->left, head, &tail);
+        }
+        else
         {
             gapFlag = 1;
         }
-        if (currentNode->right)
+        if (head->node->right != NULL)
         {
-            if (gapFlag) 
-                return (free_queue(head), 0);
-            enqueue(currentNode->right, head, &tail);
+            if (gapFlag)
+            {
+                free_queue(head);
+                return (0);
+            }
+            enqueue(head->node->right, head, &tail);
         }
-        else 
+        else
         {
             gapFlag = 1;
         }
