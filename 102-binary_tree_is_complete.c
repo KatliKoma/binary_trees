@@ -78,45 +78,38 @@ int binary_tree_is_complete(const binary_tree_t *tree)
 	link_t *head, *tail;
 	int gapFlag = 0;
 
-	if (tree == NULL)
-	{
+	if (!tree)
 		return (0);
-	}
 
 	head = tail = create_new_node((binary_tree_t *)tree);
-	if (head == NULL)
-	{
+	if (!head)
 		exit(1);
-	}
-	while (head != NULL)
-	{
-		if (head->node->left != NULL)
-		{
-			if (gapFlag)
-			{
-				free_queue(head);
-				return (0);
-			}
-			enqueue(head->node->left, head, &tail);
-		}
-		else
-		{
-			gapFlag = 1;
-		}
-		if (head->node->right != NULL)
-		{
-			if (gapFlag)
-			{
-				free_queue(head);
-				return (0);
-			}
-			enqueue(head->node->right, head, &tail);
-		}
-		else
-		{
-			gapFlag = 1;
-		}
 
+	while (head)
+	{
+		binary_tree_t *currentNode = head->node;
+
+		if (currentNode->left)
+		{
+
+			if (gapFlag)
+				return (free_queue(head), 0);
+			enqueue(currentNode->left, head, &tail);
+		}
+		else
+		{
+			gapFlag = 1;
+		}
+		if (currentNode->right)
+		{
+			if (gapFlag)
+				return (free_queue(head), 0);
+			enqueue(currentNode->right, head, &tail);
+		}
+		else
+		{
+			gapFlag = 1;
+		}
 		dequeue(&head);
 	}
 	return (1);
