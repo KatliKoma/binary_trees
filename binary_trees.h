@@ -84,4 +84,6 @@ heap_t *array_to_heap(int *array, size_t size);
 int heap_extract(heap_t **root);
 int *heap_to_sorted_array(heap_t *heap, size_t *size);
 int helper(const binary_tree_t *tree, int min, int max);
+bst_t *bst_remove_node(bst_t *node, int value);
+bst_t *bst_inorder_successor(bst_t *root);
 #endif /* _BINARY_TREES_H_ */
