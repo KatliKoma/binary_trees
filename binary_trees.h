@@ -89,4 +89,5 @@ bst_t *bst_inorder_successor(bst_t *root);
 int bst_check(const binary_tree_t *tree, int min, int max);
 int height(const binary_tree_t *tree);
 int abs_diff(int a, int b);
+avl_t *avl_insert(avl_t **tree, int value);
 #endif /* _BINARY_TREES_H_ */
