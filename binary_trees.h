@@ -86,4 +86,7 @@ int *heap_to_sorted_array(heap_t *heap, size_t *size);
 int helper(const binary_tree_t *tree, int min, int max);
 bst_t *bst_remove_node(bst_t *node, int value);
 bst_t *bst_inorder_successor(bst_t *root);
+int bst_check(const binary_tree_t *tree, int min, int max);
+int height(const binary_tree_t *tree);
+int abs_diff(int a, int b);
 #endif /* _BINARY_TREES_H_ */
