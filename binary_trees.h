@@ -90,4 +90,9 @@ int bst_check(const binary_tree_t *tree, int min, int max);
 int height(const binary_tree_t *tree);
 int abs_diff(int a, int b);
 avl_t *avl_insert(avl_t **tree, int value);
+int bavl(const binary_tree_t *tree, int min, int max);
+int btl(const binary_tree_t *tree);
+int bt_balance(const binary_tree_t *tree);
+int bavl(const binary_tree_t *tree, int min, int max);
+int binary_tree_is_avl(const binary_tree_t *tree);
 #endif /* _BINARY_TREES_H_ */
