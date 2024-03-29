@@ -95,4 +95,11 @@ int btl(const binary_tree_t *tree);
 int bt_balance(const binary_tree_t *tree);
 int bavl(const binary_tree_t *tree, int min, int max);
 int binary_tree_is_avl(const binary_tree_t *tree);
+avl_t *avl_insert(avl_t **tree, int value);
+avl_t *avl_insert_full(avl_t *tree, avl_t *parent, int value);
+void val_balancer(avl_t **root, avl_t *tree, int value);
+binary_tree_t *binary_tree_rotate_left(binary_tree_t *tree);
+binary_tree_t *binary_tree_rotate_right(binary_tree_t *tree);
+int binary_tree_balance(const binary_tree_t *tree);
+
 #endif /* _BINARY_TREES_H_ */
