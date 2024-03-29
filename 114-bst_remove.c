@@ -1,78 +1,65 @@
 #include "binary_trees.h"
-#include <stdlib.h>
-
-bst_t *bst_inorder_successor(bst_t *root);
-bst_t *bst_remove_node(bst_t *root, int value);
-
 /**
- * bst_remove - Removes a node from a Binary Search Tree
- * @root: Pointer to the root node of the tree where you will remove a node
- * @value: The value to remove in the tree
- *
- * Return: Pointer to the new root node of the tree after removing the desired value
+ * min_finder - Finds the minimum root
+ * @root: pointer to the tree
+ * Return: the min number
  */
-bst_t *bst_remove(bst_t *root, int value)
-{
-	if (!root)
-		return (NULL);
 
-	return (bst_remove_node(root, value));
+bst_t *min_finder(bst_t *root)
+{
+	while (root->left != NULL)
+		root = root->left;
+	return (root);
 }
 
-bst_t *bst_remove_node(bst_t *node, int value)
+/**
+ * bst_remove - removes a node from a Binary Search Tree
+ *
+ * @root: pointer to the root node of the tree where you will remove a node
+ * @value: value to remove in the tree
+ * Return: pointer to the new root node of the tree
+ * after removing the desired value
+ */
+
+bst_t *bst_remove(bst_t *root, int value)
 {
-	if (!node)
+	bst_t *temp, *parent;
+
+	if (root == NULL)
 		return (NULL);
-
-
-	if (value == node->n)
+	else if (value < root->n)
+		root->left = bst_remove(root->left, value);
+	else if (value > root->n)
+		root->right = bst_remove(root->right, value);
+	else
 	{
-
-		if (!node->left || !node->right)
+		if (root->left == NULL && root->right == NULL)
 		{
-			bst_t *temp = node->left ? node->left : node->right;
-
-			if (!temp)
-			{
-				temp = node;
-				node = NULL;
-			}
-			else
-			{
-				*node = *temp;
-			}
+			free(root);
+			root = NULL;
+		}
+		else if (root->left == NULL)
+		{
+			temp = root;
+			parent = root->parent;
+			root = root->right;
+			root->parent = parent;
+			free(temp);
+		}
+		else if (root->right == NULL)
+		{
+			temp = root;
+			parent = root->parent;
+			root = root->left;
+			root->parent = parent;
 			free(temp);
 		}
 		else
 		{
-			bst_t *temp = bst_inorder_successor(node->right);
-
-			node->n = temp->n;
-
-			node->right = bst_remove_node(node->right, temp->n);
+			temp = min_finder(root->right);
+			root->n = temp->n;
+			root->right = bst_remove(root->right, temp->n);
 		}
 	}
-	else if (value < node->n)
-		node->left = bst_remove_node(node->left, value);
-	else
-		node->right = bst_remove_node(node->right, value);
-
-	return (node);
-}
-
-/**
- * bst_inorder_successor - Finds the inorder successor
- * @root: Root of the subtree
- *
- * Return: Inorder successor
- */
-bst_t *bst_inorder_successor(bst_t *root)
-{
-	bst_t *current = root;
-
-
-	while (current && current->left != NULL)
-		current = current->left;
-
-	return (current);
+	return (root);
 }
